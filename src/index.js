@@ -4,13 +4,19 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
+import { AdressProvider } from "./context/adressContext";
+import { WeatherProvider } from "./context/weatherContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
+    <AdressProvider>
+      <WeatherProvider>
     <BrowserRouter>
       <App />
     </BrowserRouter>
+    </WeatherProvider>
+    </AdressProvider>
   </React.StrictMode>
 );
 
