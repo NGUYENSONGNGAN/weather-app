@@ -20,7 +20,91 @@
   display: flex;
   align-items: center;
 }
-
+.CH_Detail {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 80px 0 100px;
+}
+.CH_detailContent {
+  display: flex;
+  flex-direction: column;
+  margin-left: 50px;
+}
+.CH_detailContent p {
+  font-size: 40px;
+  margin: 0;
+}
+.CH_detailContent .CH_heatAndHumidity {
+  display: flex;
+}
+.CH_heatAndHumidity .CHD_heatHumidity {
+  display: flex;
+  align-items: center;
+}
+.CH_heatAndHumidity .CHD_heatHumidity:first-child {
+  margin-right: 50px;
+}
+.CHD_heatHumidity p {
+  font-size: 24px;
+}
+.CH_Add {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.CH_Add .CH_Item {
+  width: 25%;
+  max-width: 100px;
+  padding: 10px 0;
+  background-image: linear-gradient(#70b9ff, #fff);
+  background-repeat: no-repeat;
+  background-size: 1px 100%;
+  background-position-x: right;
+  text-align: center;
+}
+.CH_Add .CH_Item:last-child {
+  background-image: none;
+}
+.CH_Add .CH_Item .CHI_name {
+  text-transform: uppercase;
+}
+.CH_Add .CH_Item .number {
+  font-size: 30px;
+  margin: 5px 0;
+}
+.CH_Add .CH_Item .number.numberColor {
+  background: #1ae863;
+  border-radius: 4px;
+  width: 40px;
+  height: 36px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 7px auto;
+}
+.CH_Add .CH_Item .cirle {
+  background: #82b6f7;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin: 15px auto auto;
+  border: 3px solid #fff;
+}
+.CH_Add .CH_Item .AddIcon {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  border: 3px solid black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 8px auto;
+}
+.CHI_name.ADDname {
+  color: black;
+}
 @media (max-width: 750px) {
   .CH_detailContent {
     margin-left: 30px;
