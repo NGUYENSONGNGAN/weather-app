@@ -32,3 +32,13 @@
   width: 2px;
   height: 200px;
 }
+.chart__Circle {
+  position: absolute;
+  top: 85%;
+  left: 49%;
+  background-color: rgb(236, 166, 15);
+  transform: translateY(0px);
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}

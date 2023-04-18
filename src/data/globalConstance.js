@@ -2,7 +2,7 @@
 
 let DATE_START = new Date("August 19, 2023 07:00");
 export let DATE_MIN = new Date("August 19, 2023 00:00");
-let dataNew = [];
+export let dataNew = [];
 for (var i = 0; i < 3960; i++) {
   let y = Math.sin((i * Math.PI) / 720);
   const newdate = DATE_START.setMinutes(DATE_START.getMinutes() + 1);
@@ -81,3 +81,30 @@ export const dataBackGround = [
   { id: 7, left: "4600px", width: "385px", opacity: 0.7 },
   { id: 8, left: "4600px", width: "385px", opacity: 0.4 },
 ];
+export const convertScrollIconMoonSun = (scrollPercentage) => {
+  let next = 0;
+  if (
+    scrollPercentage < 0.1 ||
+    (scrollPercentage > 0.4 && scrollPercentage < 0.5) ||
+    (scrollPercentage > 0.8 && scrollPercentage < 0.89)
+  ) {
+    next = scrollPercentage * 1000;
+    return { moonSun: "sun", next: 0 - next };
+  }
+  if (
+    (scrollPercentage > 0.1 && scrollPercentage < 0.2) ||
+    (scrollPercentage > 0.5 && scrollPercentage < 0.6) ||
+    (scrollPercentage > 0.89 && scrollPercentage < 0.99)
+  ) {
+    next = scrollPercentage * 1000;
+    return { moonSun: "sun", next: 0 - next };
+  }
+  if (
+    (scrollPercentage > 0.23 && scrollPercentage < 0.38) ||
+    (scrollPercentage > 0.62 && scrollPercentage < 0.78)
+  ) {
+    next = 180;
+    return { moonSun: "moon", next: 0 - next };
+  }
+  return { moonSun: "sun", next: 0 };
+};
