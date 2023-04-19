@@ -83,28 +83,9 @@ export const dataBackGround = [
 ];
 export const convertScrollIconMoonSun = (scrollPercentage) => {
   let next = 0;
-  if (
-    scrollPercentage < 0.1 ||
-    (scrollPercentage > 0.4 && scrollPercentage < 0.5) ||
-    (scrollPercentage > 0.8 && scrollPercentage < 0.89)
-  ) {
-    next = scrollPercentage * 1000;
-    return { moonSun: "sun", next: 0 - next };
-  }
-  if (
-    (scrollPercentage > 0.1 && scrollPercentage < 0.2) ||
-    (scrollPercentage > 0.5 && scrollPercentage < 0.6) ||
-    (scrollPercentage > 0.89 && scrollPercentage < 0.99)
-  ) {
-    next = scrollPercentage * 1000;
-    return { moonSun: "sun", next: 0 - next };
-  }
-  if (
-    (scrollPercentage > 0.23 && scrollPercentage < 0.38) ||
-    (scrollPercentage > 0.62 && scrollPercentage < 0.78)
-  ) {
-    next = 180;
-    return { moonSun: "moon", next: 0 - next };
-  }
-  return { moonSun: "sun", next: 0 };
+  next = Math.sin((scrollPercentage * 3600 * Math.PI) / 720);
+  next *= 152;
+  if (next < 0) return { moonSun: "moon", next: -180 };
+
+  return { moonSun: "sun", next: 0 - next };
 };

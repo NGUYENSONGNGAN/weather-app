@@ -52,7 +52,7 @@ const ChartDetail = () => {
     document.querySelector(".chart__Circle").style.transform = `translateY(${resultMoonSun.next}px)`;
     document.querySelector(".chart__Circle").style.backgroundColor = resultMoonSun.moonSun==="sun"?"rgb(236, 166, 15)":"black";
     document.querySelector(".chart__time").innerText = formatTime(convertScrollToTime(scrollPercentage));
-    console.log(scrollPercentage);
+
   };
   return (
     <div className="Chart_container">
