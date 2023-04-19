@@ -47,12 +47,16 @@ const ChartDetail = () => {
     if (scrollPercentage > 1) {
       scrollPercentage = 1;
     }
-    let resultMoonSun = convertScrollIconMoonSun(scrollPercentage)
+    let resultMoonSun = convertScrollIconMoonSun(scrollPercentage);
 
-    document.querySelector(".chart__Circle").style.transform = `translateY(${resultMoonSun.next}px)`;
-    document.querySelector(".chart__Circle").style.backgroundColor = resultMoonSun.moonSun==="sun"?"rgb(236, 166, 15)":"black";
-    document.querySelector(".chart__time").innerText = formatTime(convertScrollToTime(scrollPercentage));
-
+    document.querySelector(
+      ".chart__Circle"
+    ).style.transform = `translateY(${resultMoonSun.next}px)`;
+    document.querySelector(".chart__Circle").style.backgroundColor =
+      resultMoonSun.moonSun === "sun" ? "rgb(236, 166, 15)" : "black";
+    document.querySelector(".chart__time").innerText = formatTime(
+      convertScrollToTime(scrollPercentage)
+    );
   };
   return (
     <div className="Chart_container">
@@ -127,6 +131,11 @@ const ChartDetail = () => {
 
       <div className="chart__line"></div>
       <div className="chart__Circle"></div>
+      <div className="char_title">
+        <span>Tide</span>
+        <span> • </span>
+        <span>Sunrise & Sunset</span>
+      </div>
     </div>
   );
 };
