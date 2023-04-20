@@ -37,7 +37,7 @@ const ChartDetail = () => {
   const positionSunHandler = () => {
     let chartSVGEl = document.querySelector(".chart__svg");
     let scrollPercentage =
-      chartSVGEl.scrollLeft / (chartSVGEl.scrollWidth - 455 * 2);
+      chartSVGEl.scrollLeft / (chartSVGEl.scrollWidth - 457 * 2);
     if (scrollPercentage > 1) {
       scrollPercentage = 1;
     }
