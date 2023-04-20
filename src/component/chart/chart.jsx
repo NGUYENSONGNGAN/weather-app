@@ -5,6 +5,7 @@ import {
   convertScrollIconMoonSun,
   convertScrollToTime,
   dataBackGround,
+  dataDefaultTime,
   dataTide,
   DATE_MIN,
   formatTime,
@@ -21,14 +22,7 @@ import {
   Legend,
 } from "chart.js";
 import { Chart as ChartJs } from "chart.js/auto";
-ChartJs.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  TimeScale,
-  Tooltip,
-  Legend
-);
+ChartJs.register(CategoryScale, LinearScale, PointElement, TimeScale, Legend);
 
 const ChartDetail = () => {
   useEffect(() => {
@@ -96,15 +90,28 @@ const ChartDetail = () => {
                 x: {
                   type: "time",
                   min: DATE_MIN,
+                  grid: {
+                    display: false,
+                  },
+                  ticks: {
+                    color: "rgb(236, 166, 15)",
+                  },
                 },
                 y: {
                   beginAtZero: true,
                   ticks: {
                     display: false,
                   },
+                  grid: {
+                    display: false,
+                  },
                 },
               },
-              plugins: {},
+              plugins: {
+                tooltip: {
+                  enabled: false,
+                },
+              },
             }}
           />
         </div>
@@ -126,7 +133,21 @@ const ChartDetail = () => {
             ></div>
           );
         })}
+        {dataDefaultTime?.map((index) => {
+          return (
+            <div
+              key={index.id}
+              className="chart__timeDefault"
+              style={{ left: index.left }}
+            >
+              {index.time}
+            </div>
+          );
+        })}
+
+        <div className="chart__footerChart"></div>
       </div>
+
       <div className="chart__time"></div>
 
       <div className="chart__line"></div>

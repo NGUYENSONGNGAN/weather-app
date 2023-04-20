@@ -72,20 +72,25 @@ export const convertScrollToTime = (scrollPercentage) => {
 };
 //data background
 export const dataBackGround = [
-  { id: 1, left: "0px", width: "400px", opacity: 0.7 },
   { id: 2, left: "0px", width: "450px", opacity: 0.4 },
-  { id: 3, left: "1450px", width: "600px", opacity: 0.7 },
   { id: 4, left: "1380px", width: "665px", opacity: 0.4 },
-  { id: 5, left: "3055px", width: "650px", opacity: 0.7 },
   { id: 6, left: "3000px", width: "700px", opacity: 0.4 },
-  { id: 7, left: "4600px", width: "385px", opacity: 0.7 },
   { id: 8, left: "4600px", width: "385px", opacity: 0.4 },
 ];
 export const convertScrollIconMoonSun = (scrollPercentage) => {
   let next = 0;
   next = Math.sin((scrollPercentage * 3600 * Math.PI) / 720);
-  next *= 152;
+  next *= 142;
   if (next < 0) return { moonSun: "moon", next: -180 };
 
   return { moonSun: "sun", next: 0 - next };
 };
+//474px , 1298px , 2108px , 2930px ,3740px,4563px
+export const dataDefaultTime = [
+  { id: 1, left: "474px", time: "7:00 am" },
+  { id: 2, left: "1298px", time: "7:00 pm" },
+  { id: 3, left: "2108px", time: "7:00 am" },
+  { id: 4, left: "2930px", time: "7:00 pm" },
+  { id: 5, left: "3740px", time: "7:00 am" },
+  { id: 6, left: "4563px", time: "7:00 pm" },
+];

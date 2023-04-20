@@ -36,26 +36,7 @@ for (var i = 0; i < 4320; i++) {
 }
 const sunimg = new Image(15, 15);
 sunimg.src = "/image/sun.svg";
-Chart.register({
-  id: "uniqueid5", //typescript crashes without id
-  afterDraw: function (chart, easing) {
-    if (chart.tooltip._active && chart.tooltip._active.length) {
-      const activePoint = chart.tooltip._active[0];
-      const ctx = chart.ctx;
-      const x = activePoint.element.x;
-      const topY = chart.scales.y.top;
-      const bottomY = chart.scales.y.bottom;
-      ctx.save();
-      ctx.beginPath();
-      ctx.moveTo(x, topY);
-      ctx.lineTo(x, bottomY);
-      ctx.lineWidth = 2;
-      ctx.strokeStyle = "#d4d4d4";
-      ctx.stroke();
-      ctx.restore();
-    }
-  },
-});
+
 const pointArray = dataNew.reduce((newArray, current) => {
   if (current.valueSunMon > 0) {
     newArray.push(current.valueSunMon * 3000);
