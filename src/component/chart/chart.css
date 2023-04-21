@@ -39,6 +39,8 @@
   transform: translateX(-50%);
   color: black;
   background: #d4d4d4;
+  width: 80px;
+  text-align: center;
 }
 .chart__line {
   position: absolute;

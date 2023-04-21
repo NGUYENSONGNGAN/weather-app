@@ -51,7 +51,6 @@ const lableArray = dataNew.reduce((newArray, current) => {
   newArray.push(current.time);
   return newArray;
 }, []);
-console.log(lableArray[4319]);
 const Charttest = () => {
   return (
     <>

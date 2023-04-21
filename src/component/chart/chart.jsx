@@ -22,6 +22,7 @@ import {
   Legend,
 } from "chart.js";
 import { Chart as ChartJs } from "chart.js/auto";
+import moment from "moment";
 ChartJs.register(CategoryScale, LinearScale, PointElement, TimeScale, Legend);
 
 const ChartDetail = () => {
@@ -52,6 +53,7 @@ const ChartDetail = () => {
       convertScrollToTime(scrollPercentage)
     );
   };
+  const backgroundChartArea = {};
   return (
     <div className="Chart_container">
       <div className="chart__svg">
@@ -95,6 +97,15 @@ const ChartDetail = () => {
                   },
                   ticks: {
                     color: "rgb(236, 166, 15)",
+                    callback: (value, index, values) => {
+                      const d = moment(value);
+                      const hourTime = d.hour();
+                      const minuteTime = d.minute();
+                      return (hourTime === 7 || hourTime === 19) &&
+                        minuteTime === 0
+                        ? d.format("LT")
+                        : null;
+                    },
                   },
                 },
                 y: {
@@ -107,16 +118,25 @@ const ChartDetail = () => {
                   },
                 },
               },
-              plugins: {
-                tooltip: {
-                  enabled: false,
+              plugins: [
+                {
+                  id: "backgroundChartArea",
+                  beforeDatasetsDraw: (chart, args, options) => {
+                    console.log(chart);
+                    /* const { ctx } = chart;
+                    ctx.save();
+                    ctx.globalCompositeOperation = "destination-over";
+                    ctx.fillStyle = options.color;
+                    ctx.fillRect(0, 0, chart.width, chart.height);
+                    ctx.restore(); */
+                  },
                 },
-              },
+              ],
             }}
           />
         </div>
 
-        {dataBackGround?.map((index) => {
+        {/* {dataBackGround?.map((index) => {
           return (
             <div
               key={index.key}
@@ -132,8 +152,8 @@ const ChartDetail = () => {
               }}
             ></div>
           );
-        })}
-        {dataDefaultTime?.map((index) => {
+        })} */}
+        {/* {dataDefaultTime?.map((index) => {
           return (
             <div
               key={index.id}
@@ -145,18 +165,18 @@ const ChartDetail = () => {
           );
         })}
 
-        <div className="chart__footerChart"></div>
+        <div className="chart__footerChart"></div> */}
       </div>
 
       <div className="chart__time"></div>
 
       <div className="chart__line"></div>
       <div className="chart__Circle"></div>
-      <div className="char_title">
+      {/* <div className="char_title">
         <span>Tide</span>
         <span> • </span>
         <span>Sunrise & Sunset</span>
-      </div>
+      </div> */}
     </div>
   );
 };
