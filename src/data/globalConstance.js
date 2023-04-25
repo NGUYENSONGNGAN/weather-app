@@ -2,6 +2,7 @@
 
 let DATE_START = new Date("August 19, 2023 07:00");
 export let DATE_MIN = new Date("August 19, 2023 00:00");
+export let DATE_MAX = new Date("August 22, 2023 00:00");
 export let dataNew = [];
 for (var i = 0; i < 3960; i++) {
   let y = Math.sin((i * Math.PI) / 720);
@@ -29,14 +30,14 @@ export const lableArray = dataNew.reduce((newArray, current) => {
 }, []);
 /* data tide */
 export const dataTide = [
-  { x: DATE_MIN, y: 1000 },
-  { x: lableArray[0], y: 500 },
-  { x: lableArray[100], y: 1000 },
-  { x: lableArray[200], y: 800 },
-  { x: lableArray[300], y: 900 },
-  { x: lableArray[400], y: 1200 },
+  { x: DATE_MIN, y: 1800 },
+  { x: lableArray[0], y: 1500 },
+  { x: lableArray[100], y: 2500 },
+  { x: lableArray[200], y: 1000 },
+  { x: lableArray[300], y: 1900 },
+  { x: lableArray[400], y: 2200 },
   { x: lableArray[500], y: 1300 },
-  { x: lableArray[600], y: 800 },
+  { x: lableArray[600], y: 1800 },
   { x: lableArray[700], y: 700 },
   { x: lableArray[900], y: 500 },
   { x: lableArray[1200], y: 600 },
@@ -49,8 +50,9 @@ export const dataTide = [
   { x: lableArray[3500], y: 400 },
   { x: lableArray[3700], y: 1000 },
   { x: lableArray[3800], y: 500 },
-  { x: lableArray[3900], y: 900 },
-  { x: lableArray[3959], y: 4500 },
+  { x: lableArray[3900], y: 2500 },
+  { x: lableArray[3959], y: 3800 },
+  { x: new Date("August 22, 2023 02:30"), y: 4500 },
 ];
 //set time
 
@@ -68,15 +70,23 @@ export const formatTime = (time) => {
 };
 
 export const convertScrollToTime = (scrollPercentage) => {
-  return scrollPercentage * 60 + 7;
+  return scrollPercentage * 58 + 7;
 };
 //data background
 export const dataBackGround = [
-  { id: 2, left: "0px", width: "450px", opacity: 0.4 },
-  { id: 4, left: "1380px", width: "665px", opacity: 0.4 },
-  { id: 6, left: "3000px", width: "700px", opacity: 0.4 },
-  { id: 8, left: "4600px", width: "385px", opacity: 0.4 },
+  { id: 1, xMIn: DATE_MIN, xMax: new Date("August 19, 2023 06:00") },
+  {
+    id: 2,
+    xMIn: new Date("August 19, 2023 20:00"),
+    xMax: new Date("August 20, 2023 06:00"),
+  },
+  {
+    id: 3,
+    xMIn: new Date("August 20, 2023 20:00"),
+    xMax: new Date("August 21, 2023 06:00"),
+  },
 ];
+
 export const convertScrollIconMoonSun = (scrollPercentage) => {
   let next = 0;
   next = Math.sin((scrollPercentage * 3600 * Math.PI) / 720);

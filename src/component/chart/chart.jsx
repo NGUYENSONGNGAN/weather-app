@@ -7,6 +7,7 @@ import {
   dataBackGround,
   dataDefaultTime,
   dataTide,
+  DATE_MAX,
   DATE_MIN,
   formatTime,
   lableArray,
@@ -23,8 +24,33 @@ import {
 } from "chart.js";
 import { Chart as ChartJs } from "chart.js/auto";
 import moment from "moment";
-ChartJs.register(CategoryScale, LinearScale, PointElement, TimeScale, Legend);
 
+//import autocolors from "chartjs-plugin-autocolors";
+import annotationPlugin from "chartjs-plugin-annotation";
+ChartJs.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  TimeScale,
+  Legend,
+  //autocolors,
+  annotationPlugin
+);
+
+const plugin = {
+  id: "customCanvasBackgroundColor",
+  beforeDraw: (chart, args, options) => {
+    const {
+      ctx,
+      scales: { x, y },
+    } = chart;
+    ctx.save();
+    ctx.globalCompositeOperation = "destination-over";
+    ctx.fillStyle = "#fff";
+    ctx.fillRect(0, 0, chart.width, chart.height);
+    ctx.restore();
+  },
+};
 const ChartDetail = () => {
   useEffect(() => {
     positionSunHandler();
@@ -38,7 +64,7 @@ const ChartDetail = () => {
   const positionSunHandler = () => {
     let chartSVGEl = document.querySelector(".chart__svg");
     let scrollPercentage =
-      chartSVGEl.scrollLeft / (chartSVGEl.scrollWidth - 457 * 2);
+      chartSVGEl.scrollLeft / (chartSVGEl.scrollWidth - 500 * 2);
     if (scrollPercentage > 1) {
       scrollPercentage = 1;
     }
@@ -53,14 +79,13 @@ const ChartDetail = () => {
       convertScrollToTime(scrollPercentage)
     );
   };
-  const backgroundChartArea = {};
   return (
     <div className="Chart_container">
       <div className="chart__svg">
         <div className="box">
           <Line
             width={5000}
-            height={280}
+            height={305}
             data={{
               labels: lableArray,
 
@@ -92,19 +117,23 @@ const ChartDetail = () => {
                 x: {
                   type: "time",
                   min: DATE_MIN,
+                  max: DATE_MAX,
+                  backgroundColor: "#d5cece",
                   grid: {
                     display: false,
                   },
                   ticks: {
-                    color: "rgb(236, 166, 15)",
-                    callback: (value, index, values) => {
-                      const d = moment(value);
-                      const hourTime = d.hour();
-                      const minuteTime = d.minute();
-                      return (hourTime === 7 || hourTime === 19) &&
-                        minuteTime === 0
-                        ? d.format("LT")
-                        : null;
+                    color: (context, index) => {
+                      const tickcolor = [];
+                      if (
+                        context.tick.label === "7AM" ||
+                        context.tick.label === "7PM"
+                      ) {
+                        tickcolor.push("rgb(236, 166, 15)");
+                      } else {
+                        tickcolor.push("#d5cece");
+                      }
+                      return tickcolor;
                     },
                   },
                 },
@@ -118,65 +147,65 @@ const ChartDetail = () => {
                   },
                 },
               },
-              plugins: [
-                {
-                  id: "backgroundChartArea",
-                  beforeDatasetsDraw: (chart, args, options) => {
-                    console.log(chart);
-                    /* const { ctx } = chart;
-                    ctx.save();
-                    ctx.globalCompositeOperation = "destination-over";
-                    ctx.fillStyle = options.color;
-                    ctx.fillRect(0, 0, chart.width, chart.height);
-                    ctx.restore(); */
+
+              plugins: {
+                autocolors: false,
+                annotation: {
+                  annotations: {
+                    box1: {
+                      type: "box",
+                      xMin: DATE_MIN,
+                      xMax: new Date("August 19, 2023 06:00"),
+                      yMin: 0,
+                      yMax: 4500,
+                      backgroundColor: "rgba(90, 89, 89, 0.25)",
+                      borderColor: "rgba(90, 89, 89, 0.25)",
+                    },
+                    box2: {
+                      type: "box",
+                      xMin: new Date("August 19, 2023 20:00"),
+                      xMax: new Date("August 20, 2023 06:00"),
+                      yMin: 0,
+                      yMax: 4500,
+                      backgroundColor: "rgba(90, 89, 89, 0.25)",
+                      borderColor: "rgba(90, 89, 89, 0.25)",
+                    },
+                    box3: {
+                      type: "box",
+                      xMin: new Date("August 20, 2023 20:00"),
+                      xMax: new Date("August 21, 2023 06:00"),
+                      yMin: 0,
+                      yMax: 4500,
+                      backgroundColor: "rgba(90, 89, 89, 0.25)",
+                      borderColor: "rgba(90, 89, 89, 0.25)",
+                    },
+                    box4: {
+                      type: "box",
+                      xMin: new Date("August 21, 2023 20:00"),
+                      xMax: new Date("August 22, 2023 06:00"),
+                      yMin: 0,
+                      yMax: 4500,
+                      backgroundColor: "rgba(90, 89, 89, 0.25)",
+                      borderColor: "rgba(90, 89, 89, 0.25)",
+                    },
                   },
                 },
-              ],
+              },
             }}
+            plugins={[plugin]}
           />
         </div>
-
-        {/* {dataBackGround?.map((index) => {
-          return (
-            <div
-              key={index.key}
-              style={{
-                position: "absolute",
-                top: "5px",
-                left: index.left,
-                width: index.width,
-                height: "250px",
-                color: "black",
-                background: "black",
-                opacity: index.opacity,
-              }}
-            ></div>
-          );
-        })} */}
-        {/* {dataDefaultTime?.map((index) => {
-          return (
-            <div
-              key={index.id}
-              className="chart__timeDefault"
-              style={{ left: index.left }}
-            >
-              {index.time}
-            </div>
-          );
-        })}
-
-        <div className="chart__footerChart"></div> */}
       </div>
 
       <div className="chart__time"></div>
 
       <div className="chart__line"></div>
       <div className="chart__Circle"></div>
-      {/* <div className="char_title">
+      <div className="char_title">
         <span>Tide</span>
         <span> • </span>
         <span>Sunrise & Sunset</span>
-      </div> */}
+      </div>
     </div>
   );
 };
