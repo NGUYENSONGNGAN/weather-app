@@ -73,27 +73,12 @@ const Charttest = () => {
             width={5000}
             height={280}
             data={{
-              labels: [
-                new Date("August 19, 2023"),
-                new Date("August 20, 2023"),
-                new Date("August 21, 2023"),
+              labels: lableArray,
 
-                new Date("August 22, 2023"),
-                new Date("August 23, 2023"),
-              ],
-              /* labels: [
-                "January",
-                "February",
-                "March",
-                "April",
-                "May",
-                "June",
-                "July",
-              ], */
               datasets: [
                 {
                   label: "wwikisale",
-                  data: [65, 59, 80, 81, 56, 55, 40],
+                  data: pointArray,
                   tension: 0.4,
                   backgroundColor: "rgba(255, 99, 132, 0.2)",
                   borderColor: "#f89005",
@@ -117,7 +102,6 @@ const Charttest = () => {
                 annotation: {
                   annotations: {
                     box1: {
-                      // Indicates the type of annotation
                       type: "box",
                       xMin: DATE_MIN,
                       xMax: new Date("August 19, 2023 06:00"),
@@ -130,6 +114,26 @@ const Charttest = () => {
               },
             }}
           />
+          <svg height={"auto"} width={5000}>
+            <g>
+              <circle
+                id="sun"
+                fill="#fcdb33"
+                r={15}
+                style={{
+                  display: "block",
+                }}
+              />
+            </g>
+            {/* <g>
+            <path
+              fill="none"
+              stroke="orange"
+              id="motionPath"
+              d={}
+            />
+          </g> */}
+          </svg>
         </div>
       </div>
     </>

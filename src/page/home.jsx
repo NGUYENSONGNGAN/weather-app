@@ -7,7 +7,7 @@ const Home = () => {
     <>
       <Header />
       <ChartDetail />
-      {/* <Charttest /> */}
+      <Charttest />
     </>
   );
 };

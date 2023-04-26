@@ -4,8 +4,6 @@ import "./chart.css";
 import {
   convertScrollIconMoonSun,
   convertScrollToTime,
-  dataBackGround,
-  dataDefaultTime,
   dataTide,
   DATE_MAX,
   DATE_MIN,
@@ -19,12 +17,12 @@ import {
   LinearScale,
   PointElement,
   TimeScale,
-  Tooltip,
   Legend,
 } from "chart.js";
 import { Chart as ChartJs } from "chart.js/auto";
-import moment from "moment";
-
+import { gsap } from "gsap";
+import { MotionPathPlugin } from "gsap/MotionPathPlugin";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 //import autocolors from "chartjs-plugin-autocolors";
 import annotationPlugin from "chartjs-plugin-annotation";
 ChartJs.register(
@@ -36,7 +34,7 @@ ChartJs.register(
   //autocolors,
   annotationPlugin
 );
-
+gsap.registerPlugin(MotionPathPlugin, ScrollTrigger);
 const plugin = {
   id: "customCanvasBackgroundColor",
   beforeDraw: (chart, args, options) => {
@@ -44,11 +42,11 @@ const plugin = {
       ctx,
       scales: { x, y },
     } = chart;
-    ctx.save();
+    /* ctx.save();
     ctx.globalCompositeOperation = "destination-over";
     ctx.fillStyle = "#fff";
     ctx.fillRect(0, 0, chart.width, chart.height);
-    ctx.restore();
+    ctx.restore(); */
   },
 };
 const ChartDetail = () => {
@@ -68,13 +66,7 @@ const ChartDetail = () => {
     if (scrollPercentage > 1) {
       scrollPercentage = 1;
     }
-    let resultMoonSun = convertScrollIconMoonSun(scrollPercentage);
 
-    document.querySelector(
-      ".chart__Circle"
-    ).style.transform = `translateY(${resultMoonSun.next}px)`;
-    document.querySelector(".chart__Circle").style.backgroundColor =
-      resultMoonSun.moonSun === "sun" ? "rgb(236, 166, 15)" : "black";
     document.querySelector(".chart__time").innerText = formatTime(
       convertScrollToTime(scrollPercentage)
     );
@@ -200,7 +192,6 @@ const ChartDetail = () => {
       <div className="chart__time"></div>
 
       <div className="chart__line"></div>
-      <div className="chart__Circle"></div>
       <div className="char_title">
         <span>Tide</span>
         <span> • </span>

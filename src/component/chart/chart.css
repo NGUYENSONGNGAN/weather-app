@@ -12,7 +12,6 @@
 .chart__svg .box {
   width: 5000px;
   margin-top: -35px;
-  background-color: #d5cece;
 }
 .chart__timeDefault {
   position: absolute;
@@ -28,7 +27,7 @@
 .chart__time {
   z-index: 2;
   position: absolute;
-  top: 255px;
+  top: 85%;
   left: 50%;
   font-size: 17px;
   font-weight: 500;

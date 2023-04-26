@@ -9,23 +9,23 @@ for (var i = 0; i < 3960; i++) {
   const newdate = DATE_START.setMinutes(DATE_START.getMinutes() + 1);
   const myDate = new Date(newdate);
   dataNew.push({
-    time: myDate,
-    valueSunMon: y,
+    x: myDate,
+    y: y,
   });
 }
 
 export const pointArray = dataNew.reduce((newArray, current) => {
-  if (current.valueSunMon > 0) {
-    newArray.push(current.valueSunMon * 3000);
+  if (current.y > 0) {
+    newArray.push(current.y * 3000);
   }
-  if (current.valueSunMon < 0) {
-    newArray.push(current.valueSunMon * 0);
+  if (current.y < 0) {
+    newArray.push(current.y * 0);
   }
   return newArray;
 }, []);
 
 export const lableArray = dataNew.reduce((newArray, current) => {
-  newArray.push(current.time);
+  newArray.push(current.x);
   return newArray;
 }, []);
 /* data tide */
@@ -50,9 +50,8 @@ export const dataTide = [
   { x: lableArray[3500], y: 400 },
   { x: lableArray[3700], y: 1000 },
   { x: lableArray[3800], y: 500 },
-  { x: lableArray[3900], y: 2500 },
-  { x: lableArray[3959], y: 3800 },
-  { x: new Date("August 22, 2023 02:30"), y: 4500 },
+  { x: lableArray[3900], y: 7000 },
+  { x: lableArray[3959], y: 7000 },
 ];
 //set time
 
@@ -96,11 +95,7 @@ export const convertScrollIconMoonSun = (scrollPercentage) => {
   return { moonSun: "sun", next: 0 - next };
 };
 //474px , 1298px , 2108px , 2930px ,3740px,4563px
-export const dataDefaultTime = [
-  { id: 1, left: "474px", time: "7:00 am" },
-  { id: 2, left: "1298px", time: "7:00 pm" },
-  { id: 3, left: "2108px", time: "7:00 am" },
-  { id: 4, left: "2930px", time: "7:00 pm" },
-  { id: 5, left: "3740px", time: "7:00 am" },
-  { id: 6, left: "4563px", time: "7:00 pm" },
-];
+/* const morningGen = line()
+  .x((p) => p.x)
+  .y((p) => p.y)
+  .curve(curveCardinal); */
