@@ -122,17 +122,21 @@ const Charttest = () => {
                 r={15}
                 style={{
                   display: "block",
+                  transform: "translate(300,500})",
                 }}
               />
             </g>
-            {/* <g>
-            <path
-              fill="none"
-              stroke="orange"
-              id="motionPath"
-              d={}
-            />
-          </g> */}
+            <g>
+              <circle
+                id="sun"
+                fill="#fcdb33"
+                r={15}
+                style={{
+                  display: "block",
+                  transform: "translate(300,500})",
+                }}
+              />
+            </g>
           </svg>
         </div>
       </div>

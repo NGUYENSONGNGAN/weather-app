@@ -42,6 +42,7 @@ const plugin = {
       ctx,
       scales: { x, y },
     } = chart;
+    console.log(y);
     /* ctx.save();
     ctx.globalCompositeOperation = "destination-over";
     ctx.fillStyle = "#fff";
