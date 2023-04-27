@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Line } from "react-chartjs-2";
 import "./chart.css";
 import {
@@ -35,31 +35,25 @@ ChartJs.register(
   annotationPlugin
 );
 gsap.registerPlugin(MotionPathPlugin, ScrollTrigger);
-const plugin = {
-  id: "customCanvasBackgroundColor",
-  beforeDraw: (chart, args, options) => {
-    const {
-      ctx,
-      scales: { x, y },
-    } = chart;
-    console.log(y);
-    /* ctx.save();
-    ctx.globalCompositeOperation = "destination-over";
-    ctx.fillStyle = "#fff";
-    ctx.fillRect(0, 0, chart.width, chart.height);
-    ctx.restore(); */
-  },
-};
+let locationNew = 0;
 const ChartDetail = () => {
+  //const [widthStart, setWidthStart] = useState(0);
+  //const [location, setLocation] = useState(0);
+  const widthStart = useRef(0);
+  const location = useRef(0);
   useEffect(() => {
+    getAXIS();
     positionSunHandler();
     document.querySelector(".chart__svg").addEventListener("scroll", (e) => {
       positionSunHandler();
+      getAXIS();
+      console.log("date");
     });
     return document
       .querySelector(".chart__svg")
       .removeEventListener("scroll", () => {});
   }, []);
+
   const positionSunHandler = () => {
     let chartSVGEl = document.querySelector(".chart__svg");
     let scrollPercentage =
@@ -71,7 +65,32 @@ const ChartDetail = () => {
     document.querySelector(".chart__time").innerText = formatTime(
       convertScrollToTime(scrollPercentage)
     );
+    location.current = chartSVGEl.scrollLeft + widthStart.current;
+
+    console.log(location.current, "pixel ");
   };
+
+  const getAXIS = () => {
+    const plugin = {
+      id: "customCanvasBackgroundColor",
+      beforeDraw: (chart, args, options) => {
+        const {
+          ctx,
+          scales: { x, y },
+        } = chart;
+
+        widthStart.current = x.getPixelForValue(1692403200000);
+        console.log(x.getValueForPixel(location.current), "date");
+        /* console.log(
+        x.getPixelForValue(1692612000000) - x.getPixelForValue(1692403200000),
+        "width"
+      ); */
+      },
+    };
+    console.log(plugin);
+    return plugin;
+  };
+
   return (
     <div className="Chart_container">
       <div className="chart__svg">
@@ -185,7 +204,7 @@ const ChartDetail = () => {
                 },
               },
             }}
-            plugins={[plugin]}
+            plugins={[getAXIS()]}
           />
         </div>
       </div>

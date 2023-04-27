@@ -53,6 +53,51 @@ const lableArray = dataNew.reduce((newArray, current) => {
   return newArray;
 }, []);
 const Charttest = () => {
+  //var ctx = document.getElementById("myChart").getContext("2d");
+  /* var chart = new Chart(ctx, {
+    type: "line",
+    data: {
+      labels: lableArray,
+
+      datasets: [
+        {
+          label: "wwikisale",
+          data: pointArray,
+          tension: 0.4,
+          backgroundColor: "rgba(255, 99, 132, 0.2)",
+          borderColor: "#f89005",
+          borderWidth: 1,
+          pointRadius: 0,
+          fill: false,
+        },
+      ],
+    },
+    options: {
+      scales: {
+        x: {
+          type: "time",
+          min: DATE_MIN,
+        },
+        y: {
+          beginAtZero: true,
+        },
+      },
+      plugins: {
+        annotation: {
+          annotations: {
+            box1: {
+              type: "box",
+              xMin: DATE_MIN,
+              xMax: new Date("August 19, 2023 06:00"),
+              yMin: 50,
+              yMax: 70,
+              backgroundColor: "rgba(255, 99, 132, 0.25)",
+            },
+          },
+        },
+      },
+    },
+  }); */
   return (
     <>
       <div
@@ -69,7 +114,7 @@ const Charttest = () => {
             width: "5000px",
           }}
         >
-          <Line
+          {/* <Line
             width={5000}
             height={280}
             data={{
@@ -113,7 +158,7 @@ const Charttest = () => {
                 },
               },
             }}
-          />
+          /> */}
           <svg height={"auto"} width={5000}>
             <g>
               <circle
@@ -138,6 +183,7 @@ const Charttest = () => {
               />
             </g>
           </svg>
+          <canvas id="myChart"></canvas>
         </div>
       </div>
     </>
