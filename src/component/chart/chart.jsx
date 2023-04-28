@@ -38,9 +38,9 @@ gsap.registerPlugin(MotionPathPlugin, ScrollTrigger);
 let locationNew = 0;
 const ChartDetail = () => {
   //const [widthStart, setWidthStart] = useState(0);
-  //const [location, setLocation] = useState(0);
+  const [location, setLocation] = useState(0);
   const widthStart = useRef(0);
-  const location = useRef(0);
+  //const location = useRef(0);
   useEffect(() => {
     getAXIS();
     positionSunHandler();
@@ -65,11 +65,11 @@ const ChartDetail = () => {
     document.querySelector(".chart__time").innerText = formatTime(
       convertScrollToTime(scrollPercentage)
     );
-    location.current = chartSVGEl.scrollLeft + widthStart.current;
-
-    console.log(location.current, "pixel ");
+    //location.current = chartSVGEl.scrollLeft + widthStart.current;
+    setLocation(chartSVGEl.scrollLeft + widthStart.current);
+    console.log(location, "pixel ");
   };
-
+  var ctx = document.getElementById("myChart").getContext("2d")
   const getAXIS = () => {
     const plugin = {
       id: "customCanvasBackgroundColor",
@@ -80,130 +80,131 @@ const ChartDetail = () => {
         } = chart;
 
         widthStart.current = x.getPixelForValue(1692403200000);
-        console.log(x.getValueForPixel(location.current), "date");
+        const date = x.getValueForPixel(location);
+
+        console.log(date, "date");
         /* console.log(
         x.getPixelForValue(1692612000000) - x.getPixelForValue(1692403200000),
         "width"
       ); */
       },
     };
-    console.log(plugin);
+
     return plugin;
   };
+  const dataChart = {
+    labels: lableArray,
 
+    datasets: [
+      {
+        label: "moon",
+        data: pointArray,
+        tension: 0.4,
+        backgroundColor: "rgba(255, 99, 132, 0.2)",
+        borderColor: "#f89005",
+        borderWidth: 1,
+        pointRadius: 0,
+        fill: false,
+      },
+      {
+        label: "tide",
+        data: dataTide,
+        backgroundColor: "#45c8ec",
+        borderColor: "#45c8ec",
+        borderWidth: 1,
+        tension: 0.4,
+        pointRadius: 0,
+        fill: true,
+      },
+    ],
+  };
+  const optionChart = {
+    scales: {
+      x: {
+        type: "time",
+        min: DATE_MIN,
+        max: DATE_MAX,
+        backgroundColor: "#d5cece",
+        grid: {
+          display: false,
+        },
+        ticks: {
+          color: (context, index) => {
+            const tickcolor = [];
+            if (context.tick.label === "7AM" || context.tick.label === "7PM") {
+              tickcolor.push("rgb(236, 166, 15)");
+            } else {
+              tickcolor.push("#d5cece");
+            }
+            return tickcolor;
+          },
+        },
+      },
+      y: {
+        beginAtZero: true,
+        ticks: {
+          display: false,
+        },
+        grid: {
+          display: false,
+        },
+      },
+    },
+
+    plugins: {
+      autocolors: false,
+      annotation: {
+        annotations: {
+          box1: {
+            type: "box",
+            xMin: DATE_MIN,
+            xMax: new Date("August 19, 2023 06:00"),
+            yMin: 0,
+            yMax: 4500,
+            backgroundColor: "rgba(90, 89, 89, 0.25)",
+            borderColor: "rgba(90, 89, 89, 0.25)",
+          },
+          box2: {
+            type: "box",
+            xMin: new Date("August 19, 2023 20:00"),
+            xMax: new Date("August 20, 2023 06:00"),
+            yMin: 0,
+            yMax: 4500,
+            backgroundColor: "rgba(90, 89, 89, 0.25)",
+            borderColor: "rgba(90, 89, 89, 0.25)",
+          },
+          box3: {
+            type: "box",
+            xMin: new Date("August 20, 2023 20:00"),
+            xMax: new Date("August 21, 2023 06:00"),
+            yMin: 0,
+            yMax: 4500,
+            backgroundColor: "rgba(90, 89, 89, 0.25)",
+            borderColor: "rgba(90, 89, 89, 0.25)",
+          },
+          box4: {
+            type: "box",
+            xMin: new Date("August 21, 2023 20:00"),
+            xMax: new Date("August 22, 2023 06:00"),
+            yMin: 0,
+            yMax: 4500,
+            backgroundColor: "rgba(90, 89, 89, 0.25)",
+            borderColor: "rgba(90, 89, 89, 0.25)",
+          },
+        },
+      },
+    },
+  };
   return (
     <div className="Chart_container">
       <div className="chart__svg">
         <div className="box">
           <Line
+          id="chart"
             width={5000}
             height={305}
-            data={{
-              labels: lableArray,
-
-              datasets: [
-                {
-                  label: "moon",
-                  data: pointArray,
-                  tension: 0.4,
-                  backgroundColor: "rgba(255, 99, 132, 0.2)",
-                  borderColor: "#f89005",
-                  borderWidth: 1,
-                  pointRadius: 0,
-                  fill: false,
-                },
-                {
-                  label: "tide",
-                  data: dataTide,
-                  backgroundColor: "#45c8ec",
-                  borderColor: "#45c8ec",
-                  borderWidth: 1,
-                  tension: 0.4,
-                  pointRadius: 0,
-                  fill: true,
-                },
-              ],
-            }}
-            options={{
-              scales: {
-                x: {
-                  type: "time",
-                  min: DATE_MIN,
-                  max: DATE_MAX,
-                  backgroundColor: "#d5cece",
-                  grid: {
-                    display: false,
-                  },
-                  ticks: {
-                    color: (context, index) => {
-                      const tickcolor = [];
-                      if (
-                        context.tick.label === "7AM" ||
-                        context.tick.label === "7PM"
-                      ) {
-                        tickcolor.push("rgb(236, 166, 15)");
-                      } else {
-                        tickcolor.push("#d5cece");
-                      }
-                      return tickcolor;
-                    },
-                  },
-                },
-                y: {
-                  beginAtZero: true,
-                  ticks: {
-                    display: false,
-                  },
-                  grid: {
-                    display: false,
-                  },
-                },
-              },
-
-              plugins: {
-                autocolors: false,
-                annotation: {
-                  annotations: {
-                    box1: {
-                      type: "box",
-                      xMin: DATE_MIN,
-                      xMax: new Date("August 19, 2023 06:00"),
-                      yMin: 0,
-                      yMax: 4500,
-                      backgroundColor: "rgba(90, 89, 89, 0.25)",
-                      borderColor: "rgba(90, 89, 89, 0.25)",
-                    },
-                    box2: {
-                      type: "box",
-                      xMin: new Date("August 19, 2023 20:00"),
-                      xMax: new Date("August 20, 2023 06:00"),
-                      yMin: 0,
-                      yMax: 4500,
-                      backgroundColor: "rgba(90, 89, 89, 0.25)",
-                      borderColor: "rgba(90, 89, 89, 0.25)",
-                    },
-                    box3: {
-                      type: "box",
-                      xMin: new Date("August 20, 2023 20:00"),
-                      xMax: new Date("August 21, 2023 06:00"),
-                      yMin: 0,
-                      yMax: 4500,
-                      backgroundColor: "rgba(90, 89, 89, 0.25)",
-                      borderColor: "rgba(90, 89, 89, 0.25)",
-                    },
-                    box4: {
-                      type: "box",
-                      xMin: new Date("August 21, 2023 20:00"),
-                      xMax: new Date("August 22, 2023 06:00"),
-                      yMin: 0,
-                      yMax: 4500,
-                      backgroundColor: "rgba(90, 89, 89, 0.25)",
-                      borderColor: "rgba(90, 89, 89, 0.25)",
-                    },
-                  },
-                },
-              },
-            }}
+            data={dataChart}
+            options={optionChart}
             plugins={[getAXIS()]}
           />
         </div>

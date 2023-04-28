@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { Line } from "react-chartjs-2";
 import {
   CategoryScale,
@@ -53,6 +53,61 @@ const lableArray = dataNew.reduce((newArray, current) => {
   return newArray;
 }, []);
 const Charttest = () => {
+  //var ctx = document.getElementById("myChart").getContext("2d");
+  const chartRef = useRef(null);
+
+  useEffect(() => {
+    if (chartRef.current) {
+      const chartCanvas = chartRef.current.getContext("2d");
+
+      var chart = new Chart(chartCanvas, {
+        type: "line",
+        data: {
+          labels: lableArray,
+    
+          datasets: [
+            {
+              label: "wwikisale",
+              data: pointArray,
+              tension: 0.4,
+              backgroundColor: "rgba(255, 99, 132, 0.2)",
+              borderColor: "#f89005",
+              borderWidth: 1,
+              pointRadius: 0,
+              fill: false,
+            },
+          ],
+        },
+        options: {
+          scales: {
+            x: {
+              type: "time",
+              min: DATE_MIN,
+            },
+            y: {
+              beginAtZero: true,
+            },
+          },
+          plugins: {
+            annotation: {
+              annotations: {
+                box1: {
+                  type: "box",
+                  xMin: DATE_MIN,
+                  xMax: new Date("August 19, 2023 06:00"),
+                  yMin: 50,
+                  yMax: 70,
+                  backgroundColor: "rgba(255, 99, 132, 0.25)",
+                },
+              },
+            },
+          },
+        },
+      }); 
+      // Use chartCanvas to access the chart's canvas context and perform any needed operations
+    }
+  }, [chartRef.current]); // Add a dependency to only run this effect when chartRef.current changes
+
   //var ctx = document.getElementById("myChart").getContext("2d");
   /* var chart = new Chart(ctx, {
     type: "line",
@@ -114,6 +169,7 @@ const Charttest = () => {
             width: "5000px",
           }}
         >
+          {chartRef.current && <canvas ref={chartRef} />}
           {/* <Line
             width={5000}
             height={280}
@@ -159,31 +215,6 @@ const Charttest = () => {
               },
             }}
           /> */}
-          <svg height={"auto"} width={5000}>
-            <g>
-              <circle
-                id="sun"
-                fill="#fcdb33"
-                r={15}
-                style={{
-                  display: "block",
-                  transform: "translate(300,500})",
-                }}
-              />
-            </g>
-            <g>
-              <circle
-                id="sun"
-                fill="#fcdb33"
-                r={15}
-                style={{
-                  display: "block",
-                  transform: "translate(300,500})",
-                }}
-              />
-            </g>
-          </svg>
-          <canvas id="myChart"></canvas>
         </div>
       </div>
     </>
